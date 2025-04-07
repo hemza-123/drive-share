@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveShare - List Your Car</title>
+    <link rel="stylesheet" href="page2.css">
+    <script src="page2.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">DriveShare</a>
+        <div class="nav-items">
+            <a href="home.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="#" class="active">List Your Car</a>
+            <a href="page.html">Find a Car</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-bg"></div>
+        <h1>List Your Car for Rent</h1>
+        <p>Share your vehicle and earn extra income on your schedule</p>
+    </header>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <form id="carListingForm">
+            <div class="form-group">
+                <label for="carName" class="form-label required">Car Name (Make and Model)</label>
+                <input type="text" id="carName" class="form-control" placeholder="e.g., Toyota Camry" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="year" class="form-label required">Year of Manufacture</label>
+                <input type="number" id="year" class="form-control" min="1900" max="2025" placeholder="e.g., 2022" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="capacity" class="form-label required">Seating Capacity</label>
+                <select id="capacity" class="form-control" required>
+                    <option value="" selected disabled>Select seating capacity</option>
+                    <option value="2">2 seats</option>
+                    <option value="4">4 seats</option>
+                    <option value="5">5 seats</option>
+                    <option value="7">7 seats</option>
+                    <option value="8+">8+ seats</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="transmission" class="form-label required">Transmission</label>
+                <select id="transmission" class="form-control" required>
+                    <option value="" selected disabled>Select transmission type</option>
+                    <option value="automatic">Automatic</option>
+                    <option value="manual">Manual</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="fuel" class="form-label required">Fuel Type</label>
+                <select id="fuel" class="form-control" required>
+                    <option value="" selected disabled>Select fuel type</option>
+                    <option value="gasoline">Gasoline</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="electric">Electric</option>
+                    <option value="hybrid">Hybrid</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Features</label>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <input type="checkbox" id="ac" class="feature-checkbox" name="features" value="ac">
+                        <label for="ac">Air Conditioning</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="bluetooth" class="feature-checkbox" name="features" value="bluetooth">
+                        <label for="bluetooth">Bluetooth</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="gps" class="feature-checkbox" name="features" value="gps">
+                        <label for="gps">GPS Navigation</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="leather" class="feature-checkbox" name="features" value="leather">
+                        <label for="leather">Leather Seats</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="sunroof" class="feature-checkbox" name="features" value="sunroof">
+                        <label for="sunroof">Sunroof</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="backup" class="feature-checkbox" name="features" value="backup">
+                        <label for="backup">Backup Camera</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="childSeat" class="feature-checkbox" name="features" value="childSeat">
+                        <label for="childSeat">Child Seat</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="heatedSeats" class="feature-checkbox" name="features" value="heatedSeats">
+                        <label for="heatedSeats">Heated Seats</label>
+                    </div>
+                    <div class="feature-item">
+                        <input type="checkbox" id="aux" class="feature-checkbox" name="features" value="aux">
+                        <label for="aux">AUX/USB Input</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="description" class="form-label">Additional Description</label>
+                <textarea id="description" class="form-control" rows="4" placeholder="Tell potential renters more about your car..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required">Vehicle Photos</label>
+                <div class="upload-container" id="uploadArea">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">Drag photos here or click to upload</div>
+                    <div class="upload-subtext">Min 3, max 8 photos. Include exterior (front, back, sides) and interior.</div>
+                    <input type="file" id="carPhotos" name="carPhotos" accept="image/*" multiple style="display: none;" required>
+                </div>
+                
+                <div class="image-preview">
+                    <div class="preview-item">
+                        <img src="/api/placeholder/120/120" alt="Car image placeholder">
+                        <button type="button" class="remove-btn">×</button>
+                    </div>
+                    <div class="preview-item">
+                        <img src="/api/placeholder/120/120" alt="Car image placeholder">
+                        <button type="button" class="remove-btn">×</button>
+                    </div>
+                    <div class="preview-item">
+                        <img src="/api/placeholder/120/120" alt="Car image placeholder">
+                        <button type="button" class="remove-btn">×</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="rentalPrice" class="form-label required">Daily Rental Price ($)</label>
+                <input type="number" id="rentalPrice" class="form-control" min="1" step="0.01" placeholder="e.g., 45.00" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="location" class="form-label required">Location</label>
+                <input type="text" id="location" class="form-control" placeholder="Enter city, state" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="availability" class="form-label required">Availability</label>
+                <select id="availability" class="form-control" required>
+                    <option value="" selected disabled>Select availability</option>
+                    <option value="weekends">Weekends Only</option>
+                    <option value="weekdays">Weekdays Only</option>
+                    <option value="alldays">All Days</option>
+                    <option value="custom">Custom Schedule</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Submit Listing</button>
+                <button type="button" class="btn btn-secondary">Save Draft</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">DriveShare</div>
+                <p class="footer-text">Making car rentals simple, affordable, and accessible for everyone.</p>
+            </div>
+            <div>
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Find a Car</a></li>
+                    <li><a href="#">List Your Car</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">How it Works</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title">Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 DriveShare. All rights reserved.
+        </div>
+    </footer>
+
+    
+</body>
+</html>

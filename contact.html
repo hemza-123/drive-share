@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveShare - Contact Us</title>
+    <link rel="stylesheet" href="contact.css">
+    <script src="contact.js"></script>
+    
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">DriveShare</a>
+        <div class="nav-items">
+            <a href="#">Home</a>
+            <a href="#">Services</a>
+            <a href="#">List Your Car</a>
+            <a href="#">Find a Car</a>
+            <a href="#">About</a>
+            <a href="#" class="active">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-bg"></div>
+        <h1>Contact Us</h1>
+        <p>We're here to help with all your car sharing needs</p>
+    </header>
+
+    <!-- Main Contact Section -->
+    <section class="contact-section">
+        <!-- Contact Form and Info Grid -->
+        <div class="contact-grid">
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <h2 class="form-title">Send Us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label required">Your Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label required">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="your.email@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="(123) 456-7890">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject" class="form-label required">Subject</label>
+                        <input type="text" id="subject" class="form-control" placeholder="What is this regarding?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="department" class="form-label">Department</label>
+                        <select id="department" class="form-control">
+                            <option value="">Select a department</option>
+                            <option value="customer-support">Customer Support</option>
+                            <option value="technical-support">Technical Support</option>
+                            <option value="billing">Billing & Payments</option>
+                            <option value="car-listing">Car Listing</option>
+                            <option value="partnerships">Partnerships</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message" class="form-label required">Message</label>
+                        <textarea id="message" class="form-control" placeholder="How can we help you?" required></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Contact Information -->
+            <div class="contact-info-container">
+                <h2 class="info-title">Contact Information</h2>
+                <ul class="contact-info-list">
+                    <li class="contact-info-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-text">
+                            <strong>Main Office</strong>
+                            123 DriveShare Avenue<br>
+                            San Francisco, CA 94105<br>
+                            United States
+                        </div>
+                    </li>
+                    <li class="contact-info-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text">
+                            <strong>Phone Numbers</strong>
+                            Customer Support: (800) 123-4567<br>
+                            Technical Support: (800) 765-4321<br>
+                            Partnerships: (800) 987-6543
+                        </div>
+                    </li>
+                    <li class="contact-info-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-text">
+                            <strong>Email Addresses</strong>
+                            General Inquiries: info@driveshare.com<br>
+                            Support: support@driveshare.com<br>
+                            Partnerships: partners@driveshare.com
+                        </div>
+                    </li>
+                    <li class="contact-info-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-text">
+                            <strong>Social Media</strong>
+                            Facebook: DriveShareOfficial<br>
+                            Twitter: @DriveShare<br>
+                            Instagram: @DriveShare_Official
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Departments Section -->
+        <section class="departments-section">
+            <h2 class="section-title">Our Departments</h2>
+            <div class="departments-grid">
+                <!-- Customer Support -->
+                <div class="department-card" style="--i:1">
+                    <div class="department-icon">👥</div>
+                    <h3 class="department-title">Customer Support</h3>
+                    <p class="department-description">Our dedicated customer support team is available to assist with bookings, account issues, and general inquiries.</p>
+                    <div class="department-contact">support@driveshare.com<br>(800) 123-4567</div>
+                </div>
+                
+                <!-- Technical Support -->
+                <div class="department-card" style="--i:2">
+                    <div class="department-icon">🔧</div>
+                    <h3 class="department-title">Technical Support</h3>
+                    <p class="department-description">Having trouble with our app or website? Our tech team can help resolve any technical issues you encounter.</p>
+                    <div class="department-contact">tech@driveshare.com<br>(800) 765-4321</div>
+                </div>
+                
+                <!-- Billing & Payments -->
+                <div class="department-card" style="--i:3">
+                    <div class="department-icon">💳</div>
+                    <h3 class="department-title">Billing & Payments</h3>
+                    <p class="department-description">For questions about payments, refunds, invoices, or any other financial matters related to your account.</p>
+                    <div class="department-contact">billing@driveshare.com<br>(800) 234-5678</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Map Section -->
+        <section class="map-section">
+            <h2 class="section-title">Find Us</h2>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    <img src="/api/placeholder/1200/400" alt="Map Location">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Office Hours Section -->
+        <section class="hours-section">
+            <h2 class="section-title">Office Hours</h2>
+            <div class="hours-container">
+                <h3 class="hours-title">When You Can Reach Us</h3>
+                <div class="hours-grid">
+                    <div class="hours-item">
+                        <div class="day">Monday - Friday</div>
+                        <div class="time">8:00 AM - 8:00 PM PST</div>
+                    </div>
+                    <div class="hours-item">
+                        <div class="day">Saturday</div>
+                        <div class="time">9:00 AM - 6:00 PM PST</div>
+                    </div>
+                    <div class="hours-item">
+                        <div class="day">Sunday</div>
+                        <div class="time">10:00 AM - 4:00 PM PST</div>
+                    </div>
+                    <div class="hours-item">
+                        <div class="day">Emergency Support</div>
+                        <div class="time">24/7</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">DriveShare</div>
+                <p class="footer-text">Making car rentals simple, affordable, and accessible for everyone.</p>
+            </div>
+            <div>
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Find a Car</a></li>
+                    <li><a href="#">List Your Car</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">How it Works</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title">Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 DriveShare. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Simple form validation
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // If validation passes
+            alert('Your message has been sent successfully! Our team will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>

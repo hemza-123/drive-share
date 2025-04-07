@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveShare - Create Account</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        body {
+            background-color: #0a1e3f;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 10%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease forwards;
+            background-color: rgba(5, 15, 35, 0.95);
+        }
+        
+        .navbar.scrolled {
+            padding: 0.7rem 10%;
+            background-color: rgba(5, 15, 35, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-items {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-items a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-items a:hover {
+            color: #ffcc00;
+        }
+        
+        .nav-items a.active {
+            color: #ffcc00;
+        }
+        
+        .nav-items a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ffcc00;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-items a:hover::after,
+        .nav-items a.active::after {
+            width: 100%;
+        }
+        
+        /* Header Section */
+        .header {
+            padding: 8rem 10% 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .header p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10, 30, 63, 0.8), rgba(10, 30, 63, 0.95));
+            z-index: 0;
+        }
+        
+        /* Form Container */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+        
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: #ffcc00;
+            border-radius: 15px 0 0 15px;
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .form-label.required::after {
+            content: " *";
+            color: #ffcc00;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #ffcc00;
+            box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.2);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
+        
+        /* Password Strength meter */
+        .password-strength {
+            height: 5px;
+            margin-top: 0.5rem;
+            border-radius: 3px;
+            background-color: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .strength-meter {
+            height: 100%;
+            width: 0%;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-weak {
+            width: 33%;
+            background-color: #ff4d4d;
+        }
+        
+        .strength-medium {
+            width: 66%;
+            background-color: #ffcc00;
+        }
+        
+        .strength-strong {
+            width: 100%;
+            background-color: #66cc66;
+        }
+        
+        /* Form Actions */
+        .form-actions {
+            margin-top: 2.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: #ffcc00;
+            color: #0a1e3f;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e6b800;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 204, 0, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .social-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .social-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+        }
+        
+        .social-divider::before,
+        .social-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-divider-text {
+            padding: 0 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+        }
+        
+        .social-button:hover {
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .login-link {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .login-link a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Profile picture upload */
+        .avatar-upload {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .avatar-edit {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 36px;
+            height: 36px;
+            background-color: #ffcc00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .avatar-edit input {
+            display: none;
+        }
+        
+        .avatar-preview {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(255, 204, 0, 0.5);
+            position: relative;
+        }
+        
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Checkbox styling */
+        .checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .custom-checkbox {
+            display: none;
+        }
+        
+        .custom-checkbox + label {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            line-height: 1.5;
+            user-select: none;
+        }
+        
+        .custom-checkbox + label:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .custom-checkbox:checked + label:before {
+            background-color: #ffcc00;
+            border-color: #ffcc00;
+        }
+        
+        .custom-checkbox:checked + label:after {
+            content: '✓';
+            position: absolute;
+            left: 4px;
+            top: 0px;
+            color: #0a1e3f;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: rgba(5, 15, 35, 0.95);
+            padding: 4rem 10% 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover {
+            color: #ffcc00;
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                min-height: 30vh;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">DriveShare</a>
+        <div class="nav-items">
+            <a href="#">Home</a>
+            <a href="#">Services</a>
+            <a href="#">List Your Car</a>
+            <a href="#">Find a Car</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-bg"></div>
+        <h1>Create Your Account</h1>
+        <p>Join our community to rent cars or list your own</p>
+    </header>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <form id="registerForm">
+            <div class="avatar-upload">
+                <div class="avatar-edit">
+                    <input type="file" id="profilePicture" accept="image/*" />
+                    <label for="profilePicture">✏️</label>
+                </div>
+                <div class="avatar-preview">
+                    <img src="/api/placeholder/120/120" alt="Profile picture" id="profilePreview">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="firstName" class="form-label required">First Name</label>
+                <input type="text" id="firstName" class="form-control" placeholder="Enter your first name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="lastName" class="form-label required">Last Name</label>
+                <input type="text" id="lastName" class="form-control" placeholder="Enter your last name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="form-label required">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="your.email@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone" class="form-label required">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" placeholder="(123) 456-7890" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label required">Password</label>
+                <input type="password" id="password" class="form-control" placeholder="Create a strong password" required>
+                <div class="password-strength">
+                    <div class="strength-meter" id="strengthMeter"></div>
+                </div>
+                <div class="form-text" id="passwordStrengthText">Password must be at least 8 characters</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword" class="form-label required">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="driverLicense" class="form-label required">Driver's License Number</label>
+                <input type="text" id="driverLicense" class="form-control" placeholder="Enter your driver's license number" required>
+                <div class="form-text">Required for identity verification and insurance purposes</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="birthdate" class="form-label required">Date of Birth</label>
+                <input type="date" id="birthdate" class="form-control" required>
+                <div class="form-text">You must be at least 21 years old to use DriveShare</div>
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="termsAgree" class="custom-checkbox" required>
+                    <label for="termsAgree">I agree to the <a href="#" style="color: #ffcc00;">Terms of Service</a> and <a href="#" style="color: #ffcc00;">Privacy Policy</a></label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="marketingAgree" class="custom-checkbox">
+                    <label for="marketingAgree">I would like to receive news, updates and special offers from DriveShare</label>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </div>
+            
+            <div class="social-login">
+                <div class="social-divider">
+                    <span class="social-divider-text">Or sign up with</span>
+                </div>
+                <div class="social-buttons">
+                    <button type="button" class="social-button">
+                        <span>Google</span>
+                    </button>
+                    <button type="button" class="social-button">
+                        <span>Facebook</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="login-link">
+                Already have an account? <a href="#">Log In</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">DriveShare</div>
+                <p class="footer-text">Making car rentals simple, affordable, and accessible for everyone.</p>
+            </div>
+            <div>
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="page.html">Find a Car</a></li>
+                    <li><a href="page2.html">List Your Car</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#">How it Works</a></li>
+                    <li><a href="#">Testimonials</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title">Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 DriveShare. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Password strength meter
+        const passwordInput = document.getElementById('password');
+        const strengthMeter = document.getElementById('strengthMeter');
+        const strengthText = document.getElementById('passwordStrengthText');
+        
+        passwordInput.addEventListener('input', updateStrength);
+        
+        function updateStrength() {
+            const password = passwordInput.value;
+            let strength = 0;
+            
+            if (password.length >= 8) strength += 1;
+            if (password.match(/[A-Z]/)) strength += 1;
+            if (password.match(/[0-9]/)) strength += 1;
+            if (password.match(/[^A-Za-z0-9]/)) strength += 1;
+            
+            strengthMeter.className = "strength-meter";
+            
+            if (password.length === 0) {
+                strengthMeter.style.width = "0%";
+                strengthText.textContent = "Password must be at least 8 characters";
+            } else if (strength === 1) {
+                strengthMeter.classList.add("strength-weak");
+                strengthText.textContent = "Password strength: Weak";
+            } else if (strength >= 2 && strength < 4) {
+                strengthMeter.classList.add("strength-medium");
+                strengthText.textContent = "Password strength: Medium";
+            } else if (strength >= 4) {
+                strengthMeter.classList.add("strength-strong");
+                strengthText.textContent = "Password strength: Strong";
+            }
+        }
+        
+        // Profile picture preview
+        const profilePicture = document.getElementById('profilePicture');
+        const profilePreview = document.getElementById('profilePreview');
+        
+        profilePicture.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePreview.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Password validation
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert("Passwords don't match. Please try again.");
+                return;
+            }
+            
+            // Age validation
+            const birthdate = new Date(document.getElementById('birthdate').value);
+            const today = new Date();
+            let age = today.getFullYear() - birthdate.getFullYear();
+            const monthDiff = today.getMonth() - birthdate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
+                age--;
+            }
+            
+            if (age < 21) {
+                alert("You must be at least 21 years old to create an account.");
+                return;
+            }
+            
+            // If validation passes
+            alert('Account created successfully! Welcome to DriveShare.');
+            // Here you would typically redirect to login or dashboard
+        });
+    </script>
+</body>
+</html>

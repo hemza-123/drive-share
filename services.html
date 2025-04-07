@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveShare - Services</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        body {
+            background-color: #0a1e3f;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 10%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease forwards;
+            background-color: transparent;
+        }
+        
+        .navbar.scrolled {
+            padding: 0.7rem 10%;
+            background-color: rgba(5, 15, 35, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-items {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-items a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-items a:hover {
+            color: #ffcc00;
+        }
+        
+        .nav-items a.active {
+            color: #ffcc00;
+        }
+        
+        .nav-items a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ffcc00;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-items a:hover::after,
+        .nav-items a.active::after {
+            width: 100%;
+        }
+        
+        /* Hamburger menu for mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Header Section */
+        .header {
+            padding: 8rem 10% 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .header p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10, 30, 63, 0.8), rgba(10, 30, 63, 0.95));
+            z-index: 0;
+        }
+        
+        /* Services Hero */
+        .services-hero {
+            position: relative;
+            padding-bottom: 3rem;
+        }
+        
+        .services-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 800px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffcc00, transparent);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 2s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 2;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards, float 2s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+        
+        .scroll-indicator svg {
+            width: 40px;
+            height: 40px;
+            fill: #ffcc00;
+        }
+        
+        /* Services Section */
+        .section {
+            padding: 5rem 10%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            opacity: 0;
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+            opacity: 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .service-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: #ffcc00;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .service-card:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .service-icon {
+            font-size: 3.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+        
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffcc00;
+        }
+        
+        .service-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .service-link {
+            display: inline-block;
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .service-link::after {
+            content: '→';
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        
+        .service-link:hover::after {
+            transform: translateX(5px);
+        }
+        
+        /* How It Works Section */
+        .process-container {
+            display: flex;
+            position: relative;
+            max-width: 1000px;
+            margin: 4rem auto 0;
+        }
+        
+        .process-line {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+        
+        .process-progress {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background-color: #ffcc00;
+            z-index: 1;
+            transition: width 1s ease;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .process-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #0a1e3f;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step.active .step-number {
+            border-color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
+            transform: scale(1.1);
+        }
+        
+        .step-title {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .step-text {
+            font-size: 0.95rem;
+            text-align: center;
+            max-width: 200px;
+            opacity: 0.8;
+        }
+        
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .pricing-card.popular {
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background-color: #ffcc00;
+            color: #0a1e3f;
+            font-weight: bold;
+            padding: 0.5rem 2.5rem;
+            font-size: 0.9rem;
+            transform: rotate(45deg);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .pricing-card.popular:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+        
+        .pricing-title {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+            color: #ffcc00;
+            text-align: center;
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-price span {
+            font-size: 1.2rem;
+            font-weight: normal;
+            opacity: 0.7;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+        
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            color: #ffcc00;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .pricing-btn {
+            background-color: transparent;
+            color: #ffcc00;
+            border: 2px solid #ffcc00;
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+        }
+        
+        .pricing-btn:hover {
+            background-color: #ffcc00;
+            color: #0a1e3f;
+        }
+        
+        .pricing-card.popular .pricing-btn {
+            background-color: #ffcc00;
+            color: #0a1e3f;
+        }
+        
+        .pricing-card.popular .pricing-btn:hover {
+            background-color: #e6b800;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-container {
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .testimonial-slide {
+            display: none;
+            padding: 2rem;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .testimonial-slide.active {
+            display: block;
+        }
+        
+        .testimonial-quote {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-style: italic;
+            position: relative;
+        }
+        
+        .testimonial-quote::before,
+        .testimonial-quote::after {
+            content: '"';
+            color: #ffcc00;
+            font-size: 3rem;
+            position: absolute;
+            opacity: 0.5;
+        }
+        
+        .testimonial-quote::before {
+            top: -20px;
+            left: -15px;
+        }
+        
+        .testimonial-quote::after {
+            bottom: -40px;
+            right: -15px;
+        }
+        
+        .testimonial-author {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .testimonial-role {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+        }
+        
+        .testimonial-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-dot.active {
+            background-color: #ffcc00;
+            transform: scale(1.2);
+        }
+        
+        /* FAQs Section */
+        .faqs-container {
+            max-width: 800px;
+            margin: 3rem auto 0;
+        }
+        
+        .faq-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .faq-question {
+            padding: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: #ffcc00;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding: 0 1.2rem;
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 1.2rem 1.2rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            padding: 5rem 10%;
+            background: linear-gradient(135deg, rgba(15, 40, 80, 0.8), rgba(5, 15, 35, 0.8));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/1200/600') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+            filter: blur(3px);
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .cta-text {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        
+        .btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary {
+            background-color: #ffcc00;
+            color: #0a1e3f;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e6b800;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 204, 0, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: rgba(5, 15, 35, 0.95);
+            padding: 4rem 10% 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover {
+            color: #ffcc00;
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Animation for section visibility */
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .slide-up {
+            animation: slideUp 1s ease forwards;
+        }
+        
+        /* Shimmer effect for buttons */
+        .btn-shimmer {
+            background: linear-gradient(90deg, 
+                rgba(255, 204, 0, 1) 0%, 
+                rgba(255, 219, 77, 1) 20%, 
+                rgba(255, 204, 0, 1) 40%, 
+                rgba(255, 204, 0, 1) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite linear;
+            color: #0a1e3f;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .services-grid, .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .process-container {
+                flex-direction: column;
+            }
+            
+            .process-line, .process-progress {
+                display: none;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+            }
+            
+            .process-step {
+                width: 100%;
+                margin-bottom: 2rem;
+                flex-direction: row;
+                text-align: left;
+                gap: 1.5rem;
+            }
+            
+            .step-number {
+                margin-bottom: 0;
+            }
+            
+            .step-content {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .step-text {
+                text-align: left;
+                max-width: none;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            .nav-items {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background-color: rgba(10, 30, 63, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 1000;
+                gap: 2rem;
+                padding: 2rem;
+            }
+            
+            .nav-items.active {
+                right: 0;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-items a {
+                font-size: 1.3rem;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 3rem 5%;
+            }
+            
+            .services-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            
+            .pricing-card.popular:hover {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+             font-size: 1.8rem;
+            }
+            
+            .testimonial-quote {
+                font-size: 1.1rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+   <nav class="navbar">
+    <div class="logo">DriveShare</div>
+    <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="nav-items" id="nav-items">
+        <a href="home.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html" class="active">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="account.html">Account</a>
+    </div>
+</nav>
+
+<!-- Header Section -->
+<header class="header services-hero">
+    <div class="header-bg"></div>
+    <h1>Our Services</h1>
+    <p>Discover the full range of DriveShare solutions for car owners and drivers across Algeria</p>
+    
+    <div class="scroll-indicator" id="scroll-indicator">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 17.414l-6.707-6.707 1.414-1.414L12 14.586l5.293-5.293 1.414 1.414z"/>
+        </svg>
+    </div>
+</header>
+
+<!-- Main Services Section -->
+<section class="section">
+    <h2 class="section-title">What We Offer</h2>
+    <p class="section-subtitle">Comprehensive car sharing solutions for every need</p>
+    
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="service-icon">🚗</div>
+            <h3 class="service-title">Hourly Rentals</h3>
+            <p class="service-text">Need a car for just a few hours? Our hourly rental service gives you the flexibility to book a vehicle exactly when you need it, without paying for a full day.</p>
+            <a href="#hourly-rentals" class="service-link">Learn more</a>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">📅</div>
+            <h3 class="service-title">Daily & Weekly Rentals</h3>
+            <p class="service-text">For longer trips or extended needs, our daily and weekly rental plans offer competitive rates with unlimited mileage and full insurance coverage.</p>
+            <a href="#long-term" class="service-link">Learn more</a>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">💰</div>
+            <h3 class="service-title">List Your Car</h3>
+            <p class="service-text">Turn your parked car into income. List your vehicle on our platform and earn money when you're not using it, with full insurance protection.</p>
+            <a href="#list-car" class="service-link">Learn more</a>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">🔄</div>
+            <h3 class="service-title">Car Subscription</h3>
+            <p class="service-text">Access to a car without the commitment of ownership. Our flexible subscription service includes maintenance, insurance, and the ability to switch vehicles.</p>
+            <a href="#subscription" class="service-link">Learn more</a>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">👨‍👩‍👧‍👦</div>
+            <h3 class="service-title">Family Plans</h3>
+            <p class="service-text">Special rates for families needing multiple vehicles or larger cars. Add multiple drivers and enjoy discounted rates on all our services.</p>
+            <a href="#family" class="service-link">Learn more</a>
+        </div>
+
+        <div class="service-card">
+            <div class="service-icon">🏢</div>
+            <h3 class="service-title">Business Solutions</h3>
+            <p class="service-text">Custom-tailored fleet management and employee transportation solutions for businesses of all sizes across Algeria.</p>
+            <a href="#business" class="service-link">Learn more</a>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="section">
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-subtitle">Simple, transparent process from booking to return</p>
+
+    <div class="process-container">
+        <div class="process-line"></div>
+        <div class="process-progress" id="process-progress"></div>
+
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3 class="step-title">Sign Up</h3>
+                    <p class="step-text">Create your free account in minutes with just your phone number and ID.</p>
+                </div>
+            </div>
+
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3 class="step-title">Book a Car</h3>
+                    <p class="step-text">Browse available vehicles nearby and book instantly from our app.</p>
+                </div>
+            </div>
+
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3 class="step-title">Unlock & Drive</h3>
+                    <p class="step-text">Use our app to unlock the car and start your journey with no paperwork.</p>
+                </div>
+            </div>
+
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3 class="step-title">Return & Rate</h3>
+                    <p class="step-text">Return the car to the designated spot and rate your experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="section">
+    <h2 class="section-title">Pricing Plans</h2>
+    <p class="section-subtitle">Transparent pricing with no hidden fees or surprises</p>
+
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <h3 class="pricing-title">Basic</h3>
+            <div class="pricing-price">1500 DA <span>/hour</span></div>
+            <ul class="pricing-features">
+                <li>Economy cars</li>
+                <li>100 km included</li>
+                <li>Basic insurance</li>
+                <li>24/7 customer support</li>
+                <li>Free cancellation (24h notice)</li>
+            </ul>
+            <a href="#basic-plan" class="pricing-btn">Choose Plan</a>
+        </div>
+
+        <div class="pricing-card popular">
+            <h3 class="pricing-title">Standard</h3>
+            <div class="pricing-price">8000 DA <span>/day</span></div>
+            <ul class="pricing-features">
+                <li>Standard & Compact SUVs</li>
+                <li>Unlimited kilometers</li>
+                <li>Full insurance coverage</li>
+                <li>24/7 roadside assistance</li>
+                <li>Free cancellation (12h notice)</li>
+                <li>Additional driver included</li>
+            </ul>
+            <a href="#standard-plan" class="pricing-btn">Choose Plan</a>
+        </div>
+
+        <div class="pricing-card">
+            <h3 class="pricing-title">Premium</h3>
+            <div class="pricing-price">45000 DA <span>/week</span></div>
+            <ul class="pricing-features">
+                <li>Luxury vehicles & Large SUVs</li>
+                <li>Unlimited kilometers</li>
+                <li>Premium insurance package</li>
+                <li>Priority customer support</li>
+                <li>Free cancellation (anytime)</li>
+                <li>Multiple drivers included</li>
+                <li>Free delivery & pickup</li>
+            </ul>
+            <a href="#premium-plan" class="pricing-btn">Choose Plan</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="section">
+    <h2 class="section-title">What Our Users Say</h2>
+    <p class="section-subtitle">Hear from drivers and car owners across Algeria</p>
+
+    <div class="testimonials-container">
+        <div class="testimonial-slide active">
+            <p class="testimonial-quote">DriveShare has completely changed how I think about car ownership. I've been able to make my car work for me when I'm not using it, earning over 30,000 DA monthly with minimal effort.</p>
+            <div class="testimonial-author">Karim Benali</div>
+            <div class="testimonial-role">Car Owner, Algiers</div>
+        </div>
+
+        <div class="testimonial-slide">
+            <p class="testimonial-quote">As a university student without a car, DriveShare has been a lifesaver. The hourly rentals are affordable and the app makes it so easy to find and book cars nearby whenever I need one.</p>
+            <div class="testimonial-author">Amina Hadj</div>
+            <div class="testimonial-role">Student, Constantine</div>
+        </div>
+
+        <div class="testimonial-slide">
+            <p class="testimonial-quote">My company switched to DriveShare's business solution last year and we've reduced our transportation costs by nearly 40%. The fleet management tools are excellent and customer service is top-notch.</p>
+            <div class="testimonial-author">Omar Tlemcani</div>
+            <div class="testimonial-role">Business Owner, Oran</div>
+        </div>
+
+        <div class="testimonial-controls">
+            <div class="testimonial-dot active"></div>
+            <div class="testimonial-dot"></div>
+            <div class="testimonial-dot"></div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQs Section -->
+<section class="section">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-subtitle">Get answers to common questions about our services</p>
+
+    <div class="faqs-container">
+        <div class="faq-item">
+            <div class="faq-question">How does the insurance work?</div>
+            <div class="faq-answer">All DriveShare rentals include comprehensive insurance coverage. For drivers, this means you're protected against damage and liability during your rental period. For car owners, your vehicle is fully insured while being used by renters, and any claims won't affect your personal insurance policy.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What if I need to extend my rental?</div>
+            <div class="faq-answer">Extending your rental is easy! Simply open the DriveShare app, navigate to your current rental, and select "Extend Rental." If the car is available for the additional time, your reservation will be extended instantly. If not, our system will help you find alternative vehicles nearby.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How do I list my car and how much can I earn?</div>
+            <div class="faq-answer">Listing your car takes less than 10 minutes through our app or website. You'll need to provide photos, details about your vehicle, and set your availability. Earnings vary based on your car's make, model, year, and location, but owners in major Algerian cities typically earn between 20,000-60,000 DA monthly when sharing their car regularly.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Are there any age restrictions for drivers?</div>
+            <div class="faq-answer">Yes, drivers must be at least 21 years old to use DriveShare. For luxury vehicles and larger SUVs, drivers must be 25 or older. Drivers under 25 may be subject to a young driver surcharge depending on the vehicle category.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">What cities do you operate in?</div>
+            <div class="faq-answer">DriveShare currently operates in Algiers, Oran, Constantine, Annaba, Setif, Blida, and Tlemcen. We're rapidly expanding to more cities across Algeria, with plans to be in all major urban areas by the end of 2025.</div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta">
+    <div class="cta-bg"></div>
+    <div class="cta-content">
+        <h2 class="cta-title">Ready to Join DriveShare?</h2>
+        <p class="cta-text">Whether you're looking to rent a car or make money from your vehicle, get started in minutes with our simple sign-up process.</p>
+        <a href="#signup" class="btn btn-primary btn-shimmer">Create Free Account</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="footer-grid">
+        <div class="footer-info">
+            <div class="footer-logo">DriveShare</div>
+            <p class="footer-text">Transforming car ownership and mobility across Algeria with innovative sharing solutions.</p>
+        </div>
+
+        <div class="footer-nav">
+            <h3 class="footer-title">Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#blog">Blog</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-services">
+            <h3 class="footer-title">Our Services</h3>
+            <ul class="footer-links">
+                <li><a href="#hourly">Hourly Rentals</a></li>
+                <li><a href="#daily">Daily Rentals</a></li>
+                <li><a href="#list">List Your Car</a></li>
+                <li><a href="#business">Business Solutions</a></li>
+                <li><a href="#subscription">Subscriptions</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-contact">
+            <h3 class="footer-title">Contact Us</h3>
+            <ul class="footer-links">
+                <li>123 Digital Avenue, Algiers</li>
+                <li>support@driveshare.dz</li>
+                <li>+213 555 123 456</li>
+                <li>Mon-Fri: 8am - 8pm</li>
+                <li>Sat-Sun: 9am - 5pm</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2025 DriveShare. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- JavaScript -->
+<script>
+// Navigation Scroll Effect
+window.addEventListener('scroll', function() {
+const navbar = document.querySelector('.navbar');
+if (window.scrollY > 50) {
+navbar.classList.add('scrolled');
+} else {
+navbar.classList.remove('scrolled');
+}
+});
+
+// Mobile Menu Toggle
+const menuToggle = document.getElementById('menu-toggle');
+const navItems = document.getElementById('nav-items');
+
+menuToggle.addEventListener('click', function() {
+navItems.classList.toggle('active');
+const spans = menuToggle.querySelectorAll('span');
+
+if (navItems.classList.contains('active')) {
+spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+spans[1].style.opacity = '0';
+spans[2].style.transform = 'rotate(-45deg) translate(8px, -8px)';
+} else {
+spans[0].style.transform = 'none';
+spans[1].style.opacity = '1';
+spans[2].style.transform = 'none';
+}
+});
+
+// Scroll Indicator
+const scrollIndicator = document.getElementById('scroll-indicator');
+if (scrollIndicator) {
+scrollIndicator.addEventListener('click', function() {
+window.scrollTo({
+    top: window.innerHeight,
+    behavior: 'smooth'
+});
+});
+}
+
+// Testimonial Slider
+const testimonialDots = document.querySelectorAll('.testimonial-dot');
+const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+
+testimonialDots.forEach((dot, index) => {
+dot.addEventListener('click', function() {
+// Remove active class from all dots and slides
+testimonialDots.forEach(d => d.classList.remove('active'));
+testimonialSlides.forEach(s => s.classList.remove('active'));
+
+// Add active class to current dot and slide
+dot.classList.add('active');
+testimonialSlides[index].classList.add('active');
+});
+});
+
+// Auto slide testimonials every 5 seconds
+let testimonialIndex = 0;
+setInterval(() => {
+testimonialIndex = (testimonialIndex + 1) % testimonialDots.length;
+testimonialDots.forEach(d => d.classList.remove('active'));
+testimonialSlides.forEach(s => s.classList.remove('active'));
+
+testimonialDots[testimonialIndex].classList.add('active');
+testimonialSlides[testimonialIndex].classList.add('active');
+}, 5000);
+
+// FAQ Accordion
+const faqItems = document.querySelectorAll('.faq-item');
+
+faqItems.forEach(item => {
+const question = item.querySelector('.faq-question');
+question.addEventListener('click', () => {
+item.classList.toggle('active');
+});
+});
+
+// Animation on Scroll
+function animateOnScroll() {
+const elements = document.querySelectorAll('.section-title, .section-subtitle, .service-card, .process-step, .pricing-card, .faq-item, .cta-title, .cta-text, .btn');
+
+elements.forEach(element => {
+const elementPosition = element.getBoundingClientRect().top;
+const windowHeight = window.innerHeight;
+
+if (elementPosition < windowHeight - 50) {
+    if (element.classList.contains('section-title') || element.classList.contains('cta-title')) {
+        element.style.animation = 'fadeIn 1s ease forwards';
+    } else if (element.classList.contains('section-subtitle') || element.classList.contains('cta-text')) {
+        element.style.animation = 'fadeIn 1s ease 0.2s forwards';
+    } else if (element.classList.contains('service-card') || element.classList.contains('pricing-card')) {
+        const delay = Array.from(element.parentNode.children).indexOf(element) * 0.2;
+        element.style.animation = `slideUp 1s ease ${delay}s forwards`;
+    } else if (element.classList.contains('process-step')) {
+        const delay = Array.from(element.parentNode.children).indexOf(element) * 0.3;
+        element.style.animation = `fadeIn 1s ease ${delay}s forwards`;
+        element.style.transform = 'translateY(0)';
+        
+        // Update progress bar based on active steps
+        const progressBar = document.getElementById('process-progress');
+        if (progressBar) {
+            const activeStepIndex = Array.from(element.parentNode.children).indexOf(element);
+            const progressWidth = ((activeStepIndex + 1) / element.parentNode.children.length) * 100;
+            progressBar.style.width = `${progressWidth}%`;
+        }
+    } else if (element.classList.contains('faq-item')) {
+        const delay = Array.from(element.parentNode.children).indexOf(element) * 0.15;
+        element.style.animation = `slideUp 1s ease ${delay}s forwards`;
+    } else if (element.classList.contains('btn')) {
+        element.style.animation = 'fadeIn 1s ease 0.4s forwards';
+    }
+}
+});
+}
+
+// Run animation function on scroll and on page load
+window.addEventListener('scroll', animateOnScroll);
+window.addEventListener('load', animateOnScroll);
+</script>
+</body>
+</html>

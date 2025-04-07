@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveShare - Motors Categories</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        body {
+            background-color: #0a1e3f;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 10%;
+            background-color: rgba(5, 15, 35, 0.95);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease forwards;
+            background-color: rgba(5, 15, 35, 0.95);
+        }
+        
+        .navbar.scrolled {
+            padding: 0.7rem 10%;
+            background-color: rgba(5, 15, 35, 0.95);
+            box-shadow: 0 5px 15px rgba(5, 15, 35, 0.95);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-items {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-items a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-items a:hover {
+            color: #ffcc00;
+        }
+        
+        .nav-items a.active {
+            color: #ffcc00;
+        }
+        
+        .nav-items a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ffcc00;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-items a:hover::after,
+        .nav-items a.active::after {
+            width: 100%;
+        }
+        
+        /* Hamburger menu for mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Header Section */
+        .header {
+            padding: 8rem 10% 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .header p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10, 30, 63, 0.8), rgba(10, 30, 63, 0.95));
+            z-index: 0;
+        }
+        
+        /* Category Section */
+        .section {
+            padding: 4rem 10%;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+        }
+
+        /* Category Navigation */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-btn {
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover {
+            background-color: rgba(255, 204, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .category-btn.active {
+            background-color: #ffcc00;
+            color: #0a1e3f;
+        }
+        
+        /* Vehicle Grid */
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .vehicle-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            position: relative;
+        }
+        
+        .vehicle-card:nth-child(1) { animation-delay: 0.1s; }
+        .vehicle-card:nth-child(2) { animation-delay: 0.2s; }
+        .vehicle-card:nth-child(3) { animation-delay: 0.3s; }
+        .vehicle-card:nth-child(4) { animation-delay: 0.4s; }
+        .vehicle-card:nth-child(5) { animation-delay: 0.5s; }
+        .vehicle-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .vehicle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .vehicle-img-container {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .vehicle-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            background-color: #1a2e4f; /* Placeholder background */
+        }
+        
+        .vehicle-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .vehicle-card:hover .vehicle-img {
+            transform: scale(1.05);
+        }
+        
+        .vehicle-category {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ffcc00;
+            color: #0a1e3f;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .vehicle-details {
+            padding: 1.5rem;
+        }
+        
+        .vehicle-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #ffcc00;
+        }
+        
+        .vehicle-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .vehicle-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        .price-period {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        
+        .btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary {
+            background-color: #ffcc00;
+            color: #0a1e3f;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e6b800;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 204, 0, 0.4);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: #ffcc00;
+            border: 1px solid #ffcc00;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 204, 0, 0.1);
+        }
+        
+        /* Featured Vehicles Section */
+        .featured-section {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 5rem 10%;
+        }
+
+        .featured-vehicle {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+            align-items: center;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .featured-img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+            background-color: #1a2e4f; /* Placeholder background */
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .featured-content {
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-title {
+            font-size: 2rem;
+            color: #ffcc00;
+            margin-bottom: 1rem;
+        }
+        
+        .featured-category {
+            display: inline-block;
+            background-color: #ffcc00;
+            color: #0a1e3f;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        
+        .featured-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .featured-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .featured-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .featured-cta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .featured-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        
+        /* Search and Filter Section */
+        .search-section {
+            background-color: rgba(5, 15, 35, 0.8);
+            padding: 3rem 10%;
+            margin-bottom: 4rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .search-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+        
+        .search-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 0.8rem 1.2rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 204, 0, 0.5);
+            outline: none;
+        }
+        
+        .search-select {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 0.8rem 1.2rem;
+            color: white;
+            appearance: none;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .search-select option {
+            background-color: #0a1e3f;
+            color: white;
+        }
+        
+        .search-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .search-btn {
+            padding: 0.8rem;
+            background-color: #ffcc00;
+            color: #0a1e3f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            grid-column: span 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .search-btn:hover {
+            background-color: #e6b800;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: rgba(5, 15, 35, 0.95);
+            padding: 4rem 10% 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover {
+            color: #ffcc00;
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .vehicle-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .search-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .featured-vehicle {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            .nav-items {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background-color: rgba(10, 30, 63, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 1000;
+                gap: 2rem;
+                padding: 2rem;
+            }
+            
+            .nav-items.active {
+                right: 0;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-items a {
+                font-size: 1.3rem;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 3rem 5%;
+            }
+            
+            .vehicle-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-features {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .search-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">DriveShare</div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-items" id="nav-items">
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="vehicles.html" class="active">Vehicles</a>
+           
+           
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <a href="#account">Account</a>
+        </div>
+    </nav>
+    
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-bg"></div>
+        <h1>Premium Motor Rentals</h1>
+        <p>From economy sedans to luxury SUVs, find the perfect vehicle for your commuting, travel, and adventure needs</p>
+    </header>
+    
+    <!-- Search Section -->
+    <section class="section">
+        <div class="search-section">
+            <div class="search-container">
+                <div>
+                    <label class="search-label" for="location">Location</label>
+                    <input type="text" id="location" placeholder="City, region, or address" class="search-input">
+                </div>
+                <div>
+                    <label class="search-label" for="category">Vehicle Type</label>
+                    <select id="category" class="search-select">
+                        <option value="">All Types</option>
+                        <option value="sedan">Sedans</option>
+                        <option value="suv">SUVs</option>
+                        <option value="hatchback">Hatchbacks</option>
+                        <option value="luxury">Luxury Cars</option>
+                        <option value="electric">Electric Cars</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="search-label" for="date">Pickup Date</label>
+                    <input type="date" id="date" class="search-input">
+                </div>
+                <button class="search-btn">
+                    <span>Search</span> 🔍
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Category Navigation -->
+    <section class="section">
+        <h2 class="section-title">Our Vehicle Fleet</h2>
+        <p class="section-subtitle">Discover our wide range of vehicles designed for comfort, style, and performance</p>
+        
+        <div class="category-nav">
+            <button class="category-btn active">All Vehicles</button>
+            <button class="category-btn">Sedans</button>
+            <button class="category-btn">SUVs</button>
+            <button class="category-btn">Hatchbacks</button>
+            <button class="category-btn">Luxury Cars</button>
+            <button class="category-btn">Electric Cars</button>
+        </div>
+        
+        <!-- Vehicle Grid -->
+        <div class="vehicle-grid">
+            <!-- Sedan -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <div class="vehicle-img">
+                        <img src="camry.webp" alt="Toyota Camry">
+                    </div>
+                    <span class="vehicle-category">Sedan</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Toyota Camry</h3>
+                    <p>Comfortable mid-size sedan with excellent fuel economy and spacious interior.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">🚗 5 Seats</span>
+                        <span class="feature">⛽ 7L/100km</span>
+                        <span class="feature">🎒 3 Suitcases</span>
+                        <span class="feature">🛡️ Safety Features</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">9,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SUV -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <div class="vehicle-img">
+                        <img src="honda.webp" alt="Honda CR-V">
+                    </div>
+                    <span class="vehicle-category">SUV</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Honda CR-V</h3>
+                    <p>Versatile compact SUV with ample cargo space and great handling for city and light off-road use.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">👪 5 Seats</span>
+                        <span class="feature">⛽ 8.5L/100km</span>
+                        <span class="feature">🎒 5 Suitcases</span>
+                        <span class="feature">🧭 All-Wheel Drive</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">12,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hatchback -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <div class="vehicle-img">
+                        <img src="golf.webp" alt="Volkswagen Golf">
+                    </div>
+                    <span class="vehicle-category">Hatchback</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Volkswagen Golf</h3>
+                    <p>Sporty compact hatchback with nimble handling and premium interior finishes.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">👨‍👩‍👧 5 Seats</span>
+                        <span class="feature">⛽ 6.5L/100km</span>
+                        <span class="feature">🎒 2 Suitcases</span>
+                        <span class="feature">📱 Apple CarPlay</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">8,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Luxury Car -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <div class="vehicle-img">
+                        <img src="mercedes-benz-e350.webp" alt="Mercedes E-Class">
+                    </div>
+                    <span class="vehicle-category">Luxury</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Mercedes E-Class</h3>
+                    <p>Elegant luxury sedan with cutting-edge technology and first-class comfort features.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">🛋️ Premium Interior</span>
+                        <span class="feature">🎵 Premium Sound</span>
+                        <span class="feature">❄️ Climate Control</span>
+                        <span class="feature">💺 Leather Seats</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">20,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Electric Car -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <div class="vehicle-img">
+                        <img src="tesla.webp" alt="Tesla Model 3">
+                    </div>
+                    <span class="vehicle-category">Electric</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Tesla Model 3</h3>
+                    <p>High-performance electric sedan with advanced autopilot features and zero emissions.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">⚡ 450km Range</span>
+                        <span class="feature">🔋 Fast Charging</span>
+                        <span class="feature">🎵 Premium Sound</span>
+                        <span class="feature">❄️ Climate Control</span>
+                        <span class="feature">💺 Leather Seats</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">18,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveShare - About Us</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        body {
+            background-color: #0a1e3f;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 10%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease forwards;
+            background-color: rgba(5, 15, 35, 0.95);
+        }
+        
+        .navbar.scrolled {
+            padding: 0.7rem 10%;
+            background-color: rgba(5, 15, 35, 0.95);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffcc00;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-items {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-items a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-items a:hover {
+            color: #ffcc00;
+        }
+        
+        .nav-items a.active {
+            color: #ffcc00;
+        }
+        
+        .nav-items a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ffcc00;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-items a:hover::after,
+        .nav-items a.active::after {
+            width: 100%;
+        }
+        
+        /* Hamburger menu for mobile */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Header Section */
+        .header {
+            padding: 8rem 10% 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-size: 3.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .header p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(10, 30, 63, 0.8), rgba(10, 30, 63, 0.95));
+            z-index: 0;
+        }
+        
+        /* About Section */
+        .section {
+            padding: 4rem 10%;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            font-size: 1.3rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-content {
+            animation: slideInLeft 1s ease forwards;
+        }
+        
+        .about-image {
+            animation: slideInRight 1s ease forwards;
+            display: flex;
+            justify-content: flex-end;
+            max-height: 400px;
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Features Section */
+        .features {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 5rem 10%;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .feature-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .feature-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .feature-card:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #ffcc00;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffcc00;
+        }
+        
+        .feature-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        /* Mission Section */
+        .mission {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .mission-content {
+            animation: slideInRight 1s ease forwards;
+        }
+        
+        .mission-image {
+            animation: slideInLeft 1s ease forwards;
+            max-height: 400px;
+            overflow: hidden;
+        }
+        
+        .mission-image img {
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+        
+        .mission-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        
+        .stat-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.2s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-text {
+            font-size: 1.1rem;
+        }
+        
+        /* Founders Section */
+        .founders {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 5rem 10%;
+        }
+        
+        .founders-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .founder-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .founder-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .founder-card:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .founder-card:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+        
+        .founder-card:nth-child(4) {
+            animation-delay: 0.7s;
+        }
+        
+        .founder-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .founder-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 3px solid #ffcc00;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .founder-card:hover .founder-image {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+        }
+        
+        .founder-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .founder-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #ffcc00;
+        }
+        
+        .founder-title {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        
+        .founder-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        
+        .founder-social {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .founder-social a {
+            color: white;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .founder-social a:hover {
+            color: #ffcc00;
+            opacity: 1;
+            transform: translateY(-3px);
+        }
+        
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            padding: 5rem 10%;
+            background: linear-gradient(135deg, rgba(15, 40, 80, 0.8), rgba(5, 15, 35, 0.8));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-text {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+        
+        .btn:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary {
+            background-color: #ffcc00;
+            color: #0a1e3f;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e6b800;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 204, 0, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: rgba(5, 15, 35, 0.95);
+            padding: 4rem 10% 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            max-width: 300px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            color: #ffcc00;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .footer-links a:hover {
+            color: #ffcc00;
+            opacity: 1;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .header h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .founders-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            .nav-items {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background-color: rgba(10, 30, 63, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.5s ease;
+                z-index: 1000;
+                gap: 2rem;
+                padding: 2rem;
+            }
+            
+            .nav-items.active {
+                right: 0;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-items a {
+                font-size: 1.3rem;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 3rem 5%;
+            }
+            
+            .about-grid, .mission {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .about-image, .mission-image {
+                order: -1;
+                justify-content: center;
+            }
+            
+            .features-grid, .founders-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">DriveShare</div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-items" id="nav-items">
+            <a href="home.html">Home</a>
+            <a href="about.html" class="active">About</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="account.html">Account</a>
+        </div>
+    </nav>
+    
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-bg"></div>
+        <h1>Revolutionizing Car Sharing in Algeria</h1>
+        <p>Learn about DriveShare's mission to transform the way people think about car ownership and rentals</p>
+    </header>
+    
+    <!-- About Section -->
+    <section class="section">
+        <h2 class="section-title">Our Story</h2>
+        <p class="section-subtitle">From a simple idea to Algeria's first peer-to-peer car sharing platform</p>
+        
+        <div class="about-grid">
+            <div class="about-content">
+                <p class="about-text">
+                    Founded in 2025, DriveShare emerged from a simple observation: thousands of cars sit idle across Algeria while many people struggle to find affordable transportation options.
+                </p>
+                <p class="about-text">
+                    Our founders, a group of inelectronics student club members and transportation experts, set out to create a solution that would benefit both car owners and those needing temporary wheels. What began as a small operation in Algiers has now expanded to serve communities across the country.
+                </p>
+                <p class="about-text">
+                    Today, DriveShare connects thousands of car owners with reliable drivers, creating a trusted community marketplace that turns vehicles from expenses into income-generating assets.
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="/api/placeholder/600/400" alt="DriveShare team">
+            </div>
+        </div>
+    </section>
+    
+    <!-- Founders Section -->
+    <section class="section founders">
+        <h2 class="section-title">Meet Our Founders</h2>
+        <p class="section-subtitle">The visionaries who brought DriveShare to life</p>
+        
+        <div class="founders-grid">
+            <div class="founder-card">
+                <div class="founder-image">
+                    <img src="nadir.jpg" alt="Mohamed Nadir BENMESBAH">
+                </div>
+                <h3 class="founder-name">Mohemed Nadir BENMESBAH</h3>
+                <div class="founder-title">Project Manager</div>
+                <p class="founder-text">
+                    Electronics engineering student at IEE and project manager at ISC Club. Skilled in leadership, team coordination, and project execution. Passionate about innovation, problem-solving, and bridging the gap between technology and practical applications.
+                </p>
+                <div class="founder-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="founder-card">
+                <div class="founder-image">
+                    <img src="hamza.jpg" alt="Hamza Abdessamed BOUMAZA">
+                </div>
+                <h3 class="founder-name">Hamza Abdessamed BOUMAZA</h3>
+                <div class="founder-title">Web Developer</div>
+                <p class="founder-text">
+                    Electronics engineering student at IEE and active member of ISC and IEEE. Skilled in web development, with a passion for building innovative digital solutions. Focused on applying technology to real-world challenges, enhancing user experiences, and contributing to impactful projects within the tech community.
+                </p>
+                <div class="founder-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            
+            <div class="founder-card">
+                <div class="founder-image">
+                    <img src="yanis.jpg" alt="Yanis BOUBEKER">
+                </div>
+                <h3 class="founder-name">Yanis BOUBEKER</h3>
+                <div class="founder-title">Chief Operations Officer</div>
+                <p class="founder-text">
+                    Transportation infrastructure specialist with 5+ years of experience in urban mobility planning and public transportation systems in North Africa.
+                </p>
+                <div class="founder-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="founder-card">
+                <div class="founder-image">
+                    <img src="loubna.jpg" alt="Looubna YESREF">
+                </div>
+                <h3 class="founder-name">Looubna YESREF</h3>
+                <div class="founder-title">Chief Marketing Officer</div>
+                <p class="founder-text">
+                    Digital marketing strategist and business development expert. Previously helped scale two successful tech startups in the MENA region.
+                </p>
+                <div class="founder-social">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="section features">
+        <h2 class="section-title">Why Choose DriveShare</h2>
+        <p class="section-subtitle">We're transforming car rentals with technology and community</p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3 class="feature-title">Extra Income</h3>
+                <p class="feature-text">
+                    Car owners can earn up to 40,000 DZD monthly by sharing their vehicles when they're not using them. Our flexible scheduling ensures you maintain full control over when your car is available.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Complete Security</h3>
+                <p class="feature-text">
+                    Every rental is protected by our comprehensive insurance policy. We thoroughly verify all drivers through our rigorous screening process, including background checks and driving history review.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title">Seamless Technology</h3>
+                <p class="feature-text">
+                    Our user-friendly app makes it easy to list your car, manage bookings, and track earnings. For renters, finding and booking the perfect vehicle is just a few taps away.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Mission Section -->
+    <section class="section">
+        <h2 class="section-title">Our Mission</h2>
+        <p class="section-subtitle">Creating sustainable transportation solutions for all Algerians</p>
+        
+        <div class="mission">
+            <div class="mission-image">
+                <img src="drive-shrare.png" alt="DriveShare mission">
+            </div>
+            <div class="mission-content">
+                <p class="mission-text">
+                    At DriveShare, we believe in creating a more efficient transportation ecosystem that benefits everyone. Our mission is to reduce the total number of cars on the road while making mobility more accessible and affordable.
+                </p>
+                <p class="mission-text">
+                    We're committed to supporting local communities by keeping transportation money within neighborhoods and reducing the environmental impact of private vehicle ownership. By utilizing existing resources more efficiently, we're building a more sustainable future.
+                </p>
+                <p class="mission-text">
+                    Looking ahead, we aim to integrate electric vehicles into our platform and collaborate with public transportation systems to create a comprehensive, eco-friendly mobility network throughout Algeria.
+                </p>
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">5,000+</div>
+                <div class="stat-text">Active vehicles</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">20,000+</div>
+                <div class="stat-text">Satisfied users</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15</div>
+                <div class="stat-text">Cities covered</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2 class="cta-title">Ready to Join the Movement?</h2>
+        <p class="cta-text">Whether you want to list your car and earn extra income or find the perfect vehicle for your next trip, DriveShare makes it easy.</p>
+        <a href="#" class="btn btn-primary">Get Started Today</a>
+    </section>
+    
+    <!-- Footer -->
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+        <div>
+            <div class="footer-logo">DriveShare</div>
+            <p class="footer-text">
+                Algeria's premier peer-to-peer car sharing platform, connecting car owners with reliable drivers since 2025.
+            </p>
+        </div>
+        
+        <div>
+            <h3 class="footer-title">Company</h3>
+            <ul class="footer-links">
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="#">Our Team</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Press</a></li>
+            </ul>
+        </div>
+        
+        <div>
+            <h3 class="footer-title">Resources</h3>
+            <ul class="footer-links">
+                <li><a href="services.html">How It Works</a></li>
+                <li><a href="#">Insurance</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </div>
+        
+        <div>
+            <h3 class="footer-title">Contact</h3>
+            <ul class="footer-links">
+                <li><a href="contact.html">Support</a></li>
+                <li><a href="#">Partners</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; 2025 DriveShare. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+</html>
+

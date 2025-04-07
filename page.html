@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveShare - Vehicle Categories</title>
+   <link rel="stylesheet" href="page.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">DriveShare</div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-items" id="nav-items">
+            <a href="home.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="vehicles.html" class="active">Vehicules</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+            <a href="account.html">Account</a>
+        </div>
+    </nav>
+    
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-bg"></div>
+        <h1>Find Your Perfect Vehicule</h1>
+        <p>From economy cars to luxury vehicles, buses, trucks, motorcycles, and water transport</p>
+    </header>
+    
+    <!-- Search Section -->
+    <section class="section">
+        <div class="search-section">
+            <div class="search-container">
+                <div>
+                    <label class="search-label" for="location">Location</label>
+                    <input type="text" id="location" placeholder="City, region, or address" class="search-input">
+                </div>
+                <div>
+                    <label class="search-label" for="category">Vehicle Type</label>
+                    <select id="category" class="search-select">
+                        <option value="">All Categories</option>
+                        <option value="economy">Economy Cars</option>
+                        <option value="luxury">Luxury Cars</option>
+                        <option value="buses">Buses</option>
+                        <option value="trucks">Trucks</option>
+                        <option value="pickups">Pickups</option>
+                        <option value="motorcycles">Motorcycles</option>
+                        <option value="watercraft">Watercraft</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="search-label" for="date">Pickup Date</label>
+                    <input type="date" id="date" class="search-input">
+                </div>
+                <button class="search-btn">
+                    <span>Search</span> 🔍
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Category Navigation -->
+    <section class="section">
+        <div class="category-nav">
+            <button class="category-btn active">All</button>
+            <button class="category-btn"><a href="ecars.html">Economy Cars</a></button>
+            <button class="category-btn"><a href="lux.html">Luxury Cars</a></button>
+            <button class="category-btn"><a href="bus.html">Buses</a></button>
+            <button class="category-btn"><a href="truck.html">Trucks</a></button>
+            <button class="category-btn"><a href="pick.html">Pickups</a></button>
+            <button class="category-btn"><a href="motor.html">Motorcycles</a></button>
+            <button class="category-btn"><a href="jetski.html">Jet Skis</a></button>
+        </div>
+        
+        <!-- Vehicle Grid -->
+        <div class="vehicle-grid">
+            <!-- Economy Car -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <div class="vehicle-img" style="background-color: #1a3a5f;"></div>
+                    <span class="vehicle-category">Economy</span>
+                    <img src="symbol.webp">
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Renault Symbol</h3>
+                    <p>Fuel-efficient sedan with comfortable ride and low operating costs.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">🚪 4 doors</span>
+                        <span class="feature">👥 5 seats</span>
+                        <span class="feature">⛽ Petrol</span>
+                        <span class="feature">🧳 2 luggage</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">3,500 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Luxury Car -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <img src="mercedes-benz-e350.webp">
+                    <div class="vehicle-img" style="background-color: #162945;"></div>
+                    <span class="vehicle-category">Luxury</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Mercedes-Benz E-Class</h3>
+                    <p>Premium luxury sedan with advanced features and superior comfort.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">🚪 4 doors</span>
+                        <span class="feature">👥 5 seats</span>
+                        <span class="feature">⛽ Diesel</span>
+                        <span class="feature">🧳 3 luggage</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">15,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bus -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <img src="coaster.webp">
+                    <div class="vehicle-img" style="background-color: #1f324d;"></div>
+                    <span class="vehicle-category">Bus</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Toyota Coaster</h3>
+                    <p>Comfortable minibus perfect for group travel and tours.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">🚪 2 doors</span>
+                        <span class="feature">👥 23 seats</span>
+                        <span class="feature">⛽ Diesel</span>
+                        <span class="feature">🚍 A/C</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">25,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Truck -->
+            <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <img src="iveco cargo.webp">
+                    <div class="vehicle-img" style="background-color: #182c4a;"></div>
+                    <span class="vehicle-category">Truck</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Iveco Daily Cargo</h3>
+                    <p>Reliable cargo truck ideal for moving furniture and heavy goods.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">⚖️ 3.5 tons</span>
+                        <span class="feature">👥 3 seats</span>
+                        <span class="feature">⛽ Diesel</span>
+                        <span class="feature">📦 15m³ capacity</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">12,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+
+            
+            <!-- Pickup -->
+           <div class="vehicle-card">
+                <div class="vehicle-img-container">
+                    <img src="hilux.webp">
+                    <div class="vehicle-img" style="background-color: #1d3553;"></div>
+                    <span class="vehicle-category">Pickup</span>
+                </div>
+                <div class="vehicle-details">
+                    <h3 class="vehicle-title">Toyota Hilux</h3>
+                    <p>Robust pickup with exceptional off-road capability and reliability.</p>
+                    <div class="vehicle-features">
+                        <span class="feature">🚪 4 doors</span>
+                        <span class="feature">👥 5 seats</span>
+                        <span class="feature">
+                        </span>
+                    </div>
+                    <div class="vehicle-price">
+                        <div>
+                            <span class="price">5,000 DZD</span>
+                            <span class="price-period">/day</span>
+                        </div>
+                        <button class="btn btn-outline">View Details</button>
+                    </div>
+                </div>
+           </div>          
+        </div>
+    </section>
+</body>
+  </html>           
